@@ -48,7 +48,7 @@ model_params = {
     "speed": 0.25, #[km / second]
     "fuel_reduction": 0.75, 
     "negotiation_method": 1,
-    "joining_method": 1,
+    "joining_method": 0,
     "bidding_threshold": 0.9, #90%
     "departure_window": 3, 
     "area_range": 25, #[km]

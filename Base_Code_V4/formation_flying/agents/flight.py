@@ -287,7 +287,7 @@ class Flight(Agent):
 
         target_agent.formation_state = 1
         
-        target_agent.agents_in_my_formation = involved_agents
+        target_agent.agents_in_my_formation = involved_agents[:]
         target_agent.formation = True
         involved_agents.append(target_agent)
 
