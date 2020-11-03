@@ -28,7 +28,7 @@ def boid_draw(agent):
         if agent.state == "scheduled":
             return {"Shape": "circle", "r": 1, "Filled": "true", "Color": "Red"}
         elif agent.state == "flying":
-            if agent.auctioneer == 1: 
+            if agent.contractor == 1: 
                 if (agent.formation_state == 0 or agent.formation_state == 3):
                     return {"Shape": "circle", "r": 2, "Filled": "true", "Color": "Red"}
                 elif agent.formation_state == 4:
@@ -47,7 +47,7 @@ def boid_draw(agent):
                 elif agent.formation_state == 1:
                     return {"Shape": "circle", "r": 5, "Filled": "true", "Color": "Orange"}
             else: 
-                raise Exception("agent not manager or auctioneer --> server.py")
+                raise Exception("agent not manager or contractor --> server.py")
         elif agent.state == "arrived":
             return {"Shape": "circle", "r": 1, "Filled": "true", "Color": "Red"}
         else:

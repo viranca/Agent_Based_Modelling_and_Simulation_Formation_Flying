@@ -89,10 +89,10 @@ class Flight(Agent):
 
         self.last_bid_expiration_time = 0
         # =============================================================================
-        #   Agents decide during initialization whether they are manager or auctioneer
+        #   Agents decide during initialization whether they are manager or contractor
         #   However, this can also be changed during the self.
         #
-        #   !!! TODO Exc. 1.3: implement when a manager can become an auctioneer and vice versa.!!!
+        #   !!! TODO Exc. 1.3: implement when a manager can become an contractor and vice versa.!!!
         # =============================================================================
         self.accepting_bids = 0
         self.received_bids = []
@@ -113,17 +113,17 @@ class Flight(Agent):
             self.manager = self.model.random.choice([0, 1])
             if self.manager:
                 self.accepting_bids = 1
-            self.auctioneer = abs(1 - self.manager)
+            self.contractor = abs(1 - self.manager)
 
         if self.model.negotiation_method == 1:
             if self.unique_id < round((self.model.n_manager/100)*self.model.n_flights):
                 self.manager = 1
-                self.auctioneer = 0
+                self.contractor = 0
                 self.accepting_bids = 1
                 self.model.amount_managers = round((self.model.n_manager/100)*self.model.n_flights)
             else: 
                 self.manager = 0
-                self.auctioneer = 1
+                self.contractor = 1
                 self.accepting_bids = 0
             
     # =============================================================================
@@ -154,11 +154,11 @@ class Flight(Agent):
         
                     if self.model.negotiation_method == 1:
                         do_CNP(self)
-                        print(self.unique_id, self.manager, self.auctioneer, give_id_list(self.agents_in_my_formation))
+                        print(self.unique_id, self.manager, self.contractor, give_id_list(self.agents_in_my_formation))
                         print("--------------------------------------------")
                     
                     
-                    #print(self.unique_id, self.manager, self.auctioneer)
+                    #print(self.unique_id, self.manager, self.contractor)
             # if self.model.negotiation_method == 2:
             #     do_English(self)
             # if self.model.negotiation_method == 3:
@@ -298,7 +298,7 @@ class Flight(Agent):
 
     # =========================================================================
     #   The value of the bid is added to the "deal value" of the manager, 
-    #   and removed from the auctioneer. A manager leads the formation, the rest
+    #   and removed from the contractor. A manager leads the formation, the rest
     #   are 'slaves' to the manager.
     #
     #   !!! TODO Exc. 1.3: improve calculation joining/leaving point.!!!
@@ -319,9 +319,9 @@ class Flight(Agent):
         target_agent.formation_role = "slave"
             
         # You can use the following error message if you want to ensure that managers can only start formations with
-        # auctioneers. The code itself has no functionality, but is a "check"
+        # contractors. The code itself has no functionality, but is a "check"
 
-        # if not self.manager and target_agent.auctioneer:
+        # if not self.manager and target_agent.contractor:
         #   raise Exception("Something is going wrong")
 
         if discard_received_bids:
@@ -633,7 +633,7 @@ class Flight(Agent):
                     neighbors.append(agent)
         if role == "a": 
             for agent in flights_airports: 
-                if type(agent) is Flight and agent.auctioneer == 1:
+                if type(agent) is Flight and agent.contractor == 1:
                     neighbors.append(agent)
         if role == "all": 
             for agent in flights_airports: 
@@ -689,23 +689,23 @@ class Flight(Agent):
         #if manager_change is zero, this means there are the wanted amount of managers in the area range
         if manager_change == 0: 
             return
-        #manager_change <0 means there are too many managers. All managers will have a probability of (managers too much)/(total managers) of changing into a auctioneer
+        #manager_change <0 means there are too many managers. All managers will have a probability of (managers too much)/(total managers) of changing into a contractor
         elif manager_change < 0: 
            if self.manager == 1: 
                n = self.model.random.randint(1,manager_amount)
                if n <= abs(manager_change):
                    self.manager = 0
-                   self.auctioneer = 1
+                   self.contractor = 1
                    self.accepting_bids = 0
                    self.model.amount_managers -=1
                    
-        #manager_change >0 means there are too little managers. All auctioneers will have a probability of (managers too little)/(total auctioneers) of changing into a manager
+        #manager_change >0 means there are too little managers. All contractors will have a probability of (managers too little)/(total contractors) of changing into a manager
         else:
             if self.manager == 0: 
                n = self.model.random.randint(1,non_manager_amount)
                if n <= abs(manager_change):
                    self.manager = 1
-                   self.auctioneer = 0
+                   self.contractor = 0
                    self.accepting_bids = 1
                    self.model.amount_managers +=1
         #The total error in the amount of managers is calculated, if this is below a certain treshold, the managers are divided amoung area  

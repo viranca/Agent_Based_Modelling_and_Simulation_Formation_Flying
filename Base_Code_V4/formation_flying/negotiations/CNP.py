@@ -8,7 +8,7 @@ def do_CNP(flight):
     if not flight.departure_time:
         raise Exception("The object passed to the greedy protocol has no departure time, therefore it seems that it is not a flight.")
     
-    if flight.auctioneer == 1 and flight.formation == False:             
+    if flight.contractor == 1 and flight.formation == False:             
         #Find the best target for the current flight
         formation_targets = flight.find_greedy_candidate()
         possible_savings = flight.find_highest_fuelsaving(formation_targets)[1]
@@ -41,14 +41,14 @@ def do_CNP(flight):
             
             
 
-                #if with the current bid, the savings of the auctioneer are lower than when giving 50% to the an othere manager
-                #then the auctioneer will bid to the next manager
+                #if with the current bid, the savings of the contractor are lower than when giving 50% to the an othere manager
+                #then the contractor will bid to the next manager
             if flight.auc_man_steps < (len(possible_savings_sorted)-1):
                 if savings_auc < (possible_savings_sorted[flight.auc_man_steps+1]):
                     flight.auc_man_steps +=1
                     flight.bid_multiplicity = 1
 
-            #If an auctioneer goes a certain amount of steps bidding to the same manager without getting into formation, 
+            #If an contractor goes a certain amount of steps bidding to the same manager without getting into formation, 
             #the bid is increased by 10 %, with a limit of 50% increase
             if flight.bids_placed_to.count(flight.best_target) > 6: 
                 flight.bids_placed_to = []
