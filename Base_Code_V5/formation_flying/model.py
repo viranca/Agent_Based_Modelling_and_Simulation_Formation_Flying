@@ -46,6 +46,8 @@ class FormationFlying(Model):
         area_check = True,
         alliance_amount = 0.4, #[40%]
         bidding_threshold = 0.9,
+        auction_step = 10, 
+        auction_start = 0.5, #[Percentage of max savings at which the auction starts]
         speed=0.220, #[km/second]
         communication_range=1000, #[km]
         departure_window = 3,
@@ -110,6 +112,8 @@ class FormationFlying(Model):
         self.area_check = True
         self.bidding_threshold = bidding_threshold #90%
         self.alliance_amount = alliance_amount
+        self.auction_start = auction_start
+        self.auction_step = auction_step
         
         self.make_airports()
         self.make_agents()

@@ -39,7 +39,7 @@ max_steps = 25
 n_iterations = 1
 
 model_params = {
-    "n_flights": 50,
+    "n_flights": 25,
     "n_origin_airports": 20,
     "n_destination_airports": 20,
     "communication_range": 200, #[km]
@@ -47,9 +47,11 @@ model_params = {
     "height": 750, # [km]
     "speed": 0.25, #[km / second]
     "fuel_reduction": 0.75, 
-    "negotiation_method": 0,
-    "joining_method": 2,
-    "bidding_threshold": 0.9, #90%
+    "negotiation_method": 4,
+    "auction_step": 5, #The stepsize that is added to a bid inside the auctions
+    "auction_start": 0.5,
+    "joining_method": 0,
+    "bidding_threshold": 0.9, #the percentage of the max value, that a manager wants at least (used in CNP)
     "departure_window": 3, 
     "area_range": 25, #[km]
     "n_manager": 40, #[%]

@@ -140,88 +140,6 @@ def calculate_new_joining_point(agent1, agent2, destination1, destination2):
     X = ((a/sin(180*(pi/180) - optimal_theta - delta))) * sin(optimal_theta)
     Y = (d/sin(180*(pi/180) - optimal_phi - mu)) * sin(optimal_phi)
     new_path = (a/sin((180*(pi/180)) - optimal_theta - delta)) * sin(delta) + (b-X-Y)*0.75 + (d/sin(180*(pi/180) - optimal_phi - mu )) * sin(mu)
-    ##new_path_consumption = new_path * f_c
-
-    #Finally, the location of the joining and leaving point:
-    ##Joining point    
-    joining_point = []
-    m = X * cos(rho)
-    n = X * sin(rho)
-    joining_point.append(mp1[0] + m)
-    joining_point.append(mp1[1] + n)  
-    ##Leaving point
-    Y_x = Y * cos(rho)
-    Y_y = Y * sin(rho)
-    leaving_point = []
-    leaving_point.append(mp2[0] + Y_x)
-    leaving_point.append(mp2[1] + Y_y)    
-    
-     
-    return joining_point, leaving_point
-
-def calculate_new_joining_point_2(agent1, agent2, destination1, destination2):
-    #for clarification on variables visit: https://app.lucidchart.com/invitations/accept/dd1c3d4b-d382-4365-884e-a81602c4a48c\
-    #define the optimizer granularity here    
-    granularity = 1 #radian
-    
-    mp1 = calc_middle_point(agent1, agent2)
-    mp2 = calc_middle_point(destination1, destination2)
-    a = calc_distance(agent1, mp1)
-    b = calc_distance(mp1, mp2)
-    d = calc_distance(destination1, mp2)
-    original_path = a + b + d
-    
-    #trigonometry flights
-    v = abs(abs(agent1[0]) - abs(mp1[0]))  
-    u = abs(abs(agent1[1]) - abs(mp1[1]))
-    if u == 0:
-        epsilon = 0
-    else:
-        epsilon = atan(v/u)
-    o = abs(abs(mp1[0]) - abs(mp2[0]))  
-    p = abs(abs(mp1[1]) - abs(mp2[1]))
-    if p == 0:
-        rho = 0
-    else:
-        rho = atan(o/p)
-    s = abs(abs(destination1[0]) - abs(mp2[0]))         
-    t = abs(abs(destination1[1]) - abs(mp2[1])) 
-    if t == 0:
-        psi = 0
-    else:
-        psi = atan(s/t)    
-
-    
-        
-    #Solve for theta
-    ##Trigonometry to obtain the flight path equations
-    ###Joining point
-    theta = 0
-    phi = 0 
-    delta = 90*(pi/180) - epsilon - rho
-    omega = 180*(pi/180) - theta - delta
-    mu = 90*(pi/180) - psi + rho
-    sigma = 180*(pi/180) - phi - mu 
-    L_1 = (a/sin(omega)) * sin(delta) 
-    L_2 = (d/sin(sigma)) * sin(mu)
-    #set up the equation for the newpath as a function of theta and phi    
-    new_path = L_1 + (b-((a/sin(180*(pi/180) - theta - delta))) * sin(theta)-(d/sin(180*(pi/180) - phi - mu)) * sin(phi))*0.75 + L_2
-    
-    new_path_before = new_path
-    while new_path_before < new_path:
-        new_path_before = new_path
-        theta = theta + granularity*(pi/180)
-        new_path = L_1 + (b-((a/sin(180*(pi/180) - theta - delta))) * sin(theta)-(d/sin(180*(pi/180) - phi - mu)) * sin(phi))*0.75 + L_2
-
-    while new_path_before < new_path:
-        new_path_before = new_path
-        phi = phi + granularity*(pi/180)
-        new_path = L_1 + (b-((a/sin(180*(pi/180) - theta - delta))) * sin(theta)-(d/sin(180*(pi/180) - phi - mu)) * sin(phi))*0.75 + L_2
-
-    #calculation of new path
-    X = ((a/sin(180*(pi/180) - theta - delta))) * sin(theta)
-    Y = (d/sin(180*(pi/180) - phi - mu)) * sin(phi)
-    new_path = (a/sin((180*(pi/180)) - theta - delta)) * sin(delta) + (b-X-Y)*0.75 + (d/sin(180*(pi/180) - phi - mu )) * sin(mu)
     # #new_path_consumption = new_path * f_c
 
     #Finally, the location of the joining and leaving point:
@@ -238,10 +156,11 @@ def calculate_new_joining_point_2(agent1, agent2, destination1, destination2):
     leaving_point.append(mp2[0] + Y_x)
     leaving_point.append(mp2[1] + Y_y)    
     
-     
-    return joining_point, leaving_point
     
-print(calculate_new_joining_point_2(agent1, agent2, destination1, destination2))
+    return original_path , new_path, joining_point, leaving_point, optimal_theta, optimal_phi
+
+    
+print(calculate_new_joining_point(agent1, agent2, destination1, destination2))
 
 
 # test = "ImageSet(Lambda(_n, 2_npi + 0.506275350332556), Integers))" 

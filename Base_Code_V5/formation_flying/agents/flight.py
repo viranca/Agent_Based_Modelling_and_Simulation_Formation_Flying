@@ -19,6 +19,8 @@ from mesa import Agent
 from .airports import Airport
 from ..negotiations.greedy import do_greedy # !!! Don't forget the others.
 from ..negotiations.CNP import do_CNP
+from ..negotiations.english import do_English
+from ..negotiations.japanese import do_Japanese
 import math
 from sympy import Symbol, pi, tan, atan, sin, cos, solveset, S
 
@@ -102,6 +104,13 @@ class Flight(Agent):
         self.formation = False 
         self.awaiting_bid = 0
         self.auc_man_steps = 0
+        self.prev_lst_len = 0
+        self.high_bid = []
+        self.high_agent = []
+        self.agents_joined = [] #used in japanese
+        self.agents_left = [] #used in japanese
+        self.bid_threshold = 0
+        self.auction_value = 0
         
         #40% becomes an alliance member, these are randomly divided over the area
         if self.unique_id < round((self.model.alliance_amount)*self.model.n_flights):
@@ -109,22 +118,15 @@ class Flight(Agent):
         else: 
             self.alliance = False
 
-        if self.model.negotiation_method == 0:
-            self.manager = self.model.random.choice([0, 1])
-            if self.manager:
-                self.accepting_bids = 1
-            self.contractor = abs(1 - self.manager)
-
-        if self.model.negotiation_method == 1:
-            if self.unique_id < round((self.model.n_manager/100)*self.model.n_flights):
-                self.manager = 1
-                self.contractor = 0
-                self.accepting_bids = 1
-                self.model.amount_managers = round((self.model.n_manager/100)*self.model.n_flights)
-            else: 
-                self.manager = 0
-                self.contractor = 1
-                self.accepting_bids = 0
+        if self.unique_id < round((self.model.n_manager/100)*self.model.n_flights):
+            self.manager = 1
+            self.contractor = 0
+            self.accepting_bids = 1
+            self.model.amount_managers = round((self.model.n_manager/100)*self.model.n_flights)
+        else: 
+            self.manager = 0
+            self.contractor = 1
+            self.accepting_bids = 0
             
     # =============================================================================
     #   In advance, the agent moves (physically) to the next step (after having negotiated)
@@ -157,14 +159,17 @@ class Flight(Agent):
                         print(self.unique_id, self.manager, self.contractor, give_id_list(self.agents_in_my_formation))
                         print("--------------------------------------------")
                     
+                    if self.model.negotiation_method == 2:
+                        do_English(self)
+                    
+                    if self.model.negotiation_method == 4:
+                        do_Japanese(self)
                     
                     #print(self.unique_id, self.manager, self.contractor)
-            # if self.model.negotiation_method == 2:
-            #     do_English(self)
+
             # if self.model.negotiation_method == 3:
             #     do_Vickrey(self)
-            # if self.model.negotiation_method == 4:
-            #     do_Japanese(self)
+
 
     # =============================================================================
     #   This formula assumes that the route of both agents are of same length, 
@@ -175,17 +180,9 @@ class Flight(Agent):
     # =============================================================================
     def calculate_potential_fuelsavings(self,  target_agent):
         if self.formation == False and target_agent.formation == False:
-            if self.model.joining_method == 0: 
-                joining_point = self.calc_middle_point(self.pos, target_agent.pos)
-                leaving_point = self.calc_middle_point(self.destination, target_agent.destination)
-            elif self.model.joining_method == 1: 
-                joining_point = self.calculate_new_joining_point(target_agent)[0]
-                leaving_point = self.calculate_new_joining_point(target_agent)[1]
-            elif self.model.joining_method == 2: 
-                joining_point = self.calculate_new_joining_point_2(target_agent)[0]
-                leaving_point = self.calculate_new_joining_point_2(target_agent)[1]                
+            joining_point = self.calc_middle_point(self.pos, target_agent.pos)
+            leaving_point = self.calc_middle_point(self.destination, target_agent.destination)
 
-            
             original_distance = calc_distance(self.pos, self.destination) + calc_distance(target_agent.pos, target_agent.destination)
 
             # We can multiply by 2 as the joining- and leaving-points are in the middle!
@@ -238,7 +235,6 @@ class Flight(Agent):
             fuel_savings = fuel_savings_joiner + fuel_savings_formation
         return fuel_savings
 
-    
 
     # =========================================================================
     #   Add the chosen flight to the formation. While flying to the joining point 
@@ -270,9 +266,7 @@ class Flight(Agent):
         if self.model.joining_method == 0: 
             self.joining_point = self.calc_middle_point(self.pos, target_agent.pos)
         elif self.model.joining_method == 1: 
-            self.joining_point = self.calculate_new_joining_point(target_agent)[0]
-        elif self.model.joining_method == 2: 
-            self.joining_point = self.calculate_new_joining_point_2(target_agent)[0]
+            self.joining_point = self.calculate_new_joining_point(target_agent)[2]
             
         self.speed_to_joining = self.calc_speed_to_joining_point(target_agent)
 
@@ -348,10 +342,8 @@ class Flight(Agent):
             if self.model.joining_method == 0: 
                 self.joining_point = self.calc_middle_point(self.pos, target_agent.pos)
             elif self.model.joining_method == 1: 
-                self.joining_point = self.calculate_new_joining_point(target_agent)[0]
-            elif self.model.joining_method == 2: 
-                self.joining_point = self.calculate_new_joining_point_2(target_agent)[0]
-                
+                self.joining_point = self.calculate_new_joining_point(target_agent)[2]
+
             target_agent.joining_point = self.joining_point
             self.speed_to_joining = self.calc_speed_to_joining_point( target_agent)
             target_agent.speed_to_joining = self.calc_speed_to_joining_point( target_agent)
@@ -362,10 +354,7 @@ class Flight(Agent):
         if self.model.joining_method == 0: 
             self.leaving_point = self.calc_middle_point(self.destination, target_agent.destination)
         elif self.model.joining_method == 1: 
-            self.leaving_point = self.calculate_new_joining_point(target_agent)[1]
-        elif self.model.joining_method == 2: 
-            self.leaving_point = self.calculate_new_joining_point_2(target_agent)[1]
-            
+            self.leaving_point = self.calculate_new_joining_point(target_agent)[3]
         self.agents_in_my_formation.append(target_agent)
         target_agent.agents_in_my_formation.append(self)
         target_agent.leaving_point = self.leaving_point
@@ -446,7 +435,6 @@ class Flight(Agent):
         dist = (((self.destination[0] - p2[0])**2 + (self.destination[1] - p2[1])**2) ** 0.5)
         return dist
     
-
     def calculate_new_joining_point(self, target_agent):
         #print(self.pos, target_agent.pos, self.destination, target_agent.destination)
         
@@ -520,9 +508,7 @@ class Flight(Agent):
             optimal_phi = float(str_is[str_is.rfind(".")-1:str_is.rfind(",")-1])*0.5
         
         X = ((a/sin(180*(pi/180) - optimal_theta - delta))) * sin(optimal_theta)    
-        Y = (d/sin(180*(pi/180) - optimal_phi - mu)) * sin(optimal_phi)  
-        
-        
+        Y = (d/sin(180*(pi/180) - optimal_phi - mu)) * sin(optimal_phi)        
         new_path = (a/sin(180*(pi/180) - optimal_theta - delta)) * sin(delta) + (b-X-Y)*0.75 + (d/sin(180*(pi/180) - optimal_phi - mu )) * sin(mu)
         #new_path_consumption = new_path * f_c
     
@@ -541,90 +527,7 @@ class Flight(Agent):
         leaving_point.append(mp2[1] + Y_y)    
         
         
-        return joining_point, leaving_point   
-
-
-    def calculate_new_joining_point_2(self, target_agent):
-        #for clarification on variables visit: https://app.lucidchart.com/invitations/accept/dd1c3d4b-d382-4365-884e-a81602c4a48c\
-        #define the optimizer granularity here    
-        granularity = 1 #radian
-        
-        mp1 = self.calc_middle_point(self.pos, target_agent.pos)
-        mp2 = self.calc_middle_point(self.destination, target_agent.destination)
-        a = self.calc_distance(mp1)
-        b = self.calc_distance(mp2)
-        d = self.calc_distance_destination(mp2)
-        original_path = a + b + d
-        
-        #trigonometry flights
-        v = abs(abs(self.pos[0]) - abs(mp1[0]))  
-        u = abs(abs(self.pos[1]) - abs(mp1[1]))
-        if u == 0:
-            epsilon = 0
-        else:
-            epsilon = atan(v/u)
-        o = abs(abs(mp1[0]) - abs(mp2[0]))  
-        p = abs(abs(mp1[1]) - abs(mp2[1]))
-        if p == 0:
-            rho = 0
-        else:
-            rho = atan(o/p)
-        s = abs(abs(self.destination[0]) - abs(mp2[0]))         
-        t = abs(abs(self.destination[1]) - abs(mp2[1])) 
-        if t == 0:
-            psi = 0
-        else:
-            psi = atan(s/t)  
-    
-        
-            
-        #Solve for theta
-        ##Trigonometry to obtain the flight path equations
-        ###Joining point
-        theta = 0
-        phi = 0 
-        delta = 90*(pi/180) - epsilon - rho
-        omega = 180*(pi/180) - theta - delta
-        mu = 90*(pi/180) - psi + rho
-        sigma = 180*(pi/180) - phi - mu 
-        L_1 = (a/sin(omega)) * sin(delta) 
-        L_2 = (d/sin(sigma)) * sin(mu)
-        #set up the equation for the newpath as a function of theta and phi    
-        new_path = L_1 + (b-((a/sin(180*(pi/180) - theta - delta))) * sin(theta)-(d/sin(180*(pi/180) - phi - mu)) * sin(phi))*0.75 + L_2
-        
-        new_path_before = new_path
-        while new_path_before < new_path:
-            new_path_before = new_path
-            theta = theta + granularity*(pi/180)
-            new_path = L_1 + (b-((a/sin(180*(pi/180) - theta - delta))) * sin(theta)-(d/sin(180*(pi/180) - phi - mu)) * sin(phi))*0.75 + L_2
-    
-        while new_path_before < new_path:
-            new_path_before = new_path
-            phi = phi + granularity*(pi/180)
-            new_path = L_1 + (b-((a/sin(180*(pi/180) - theta - delta))) * sin(theta)-(d/sin(180*(pi/180) - phi - mu)) * sin(phi))*0.75 + L_2
-    
-        #calculation of new path
-        X = ((a/sin(180*(pi/180) - theta - delta))) * sin(theta)
-        Y = (d/sin(180*(pi/180) - phi - mu)) * sin(phi)
-        new_path = (a/sin((180*(pi/180)) - theta - delta)) * sin(delta) + (b-X-Y)*0.75 + (d/sin(180*(pi/180) - phi - mu )) * sin(mu)
-        # #new_path_consumption = new_path * f_c
-    
-        #Finally, the location of the joining and leaving point:
-        ##Joining point    
-        joining_point = []
-        m = X * cos(rho)
-        n = X * sin(rho)
-        joining_point.append(mp1[0] + m)
-        joining_point.append(mp1[1] + n)  
-        ##Leaving point
-        Y_x = Y * cos(rho)
-        Y_y = Y * sin(rho)
-        leaving_point = []
-        leaving_point.append(mp2[0] + Y_x)
-        leaving_point.append(mp2[1] + Y_y)    
-        
-         
-        return joining_point, leaving_point            
+        return original_path , new_path, joining_point, leaving_point      
     # =========================================================================
     #   This function actually moves the agent. It considers many different 
     #   scenarios in the if's and elif's, which are explained step-by-step.
@@ -655,7 +558,6 @@ class Flight(Agent):
                     self.accepting_bids = 1
 
         if self.state == "flying":
-
             self.model.total_flight_time += 1
             if self.formation_state == 2:
                 # If in formation, fuel consumption is 75% of normal fuel consumption.
@@ -670,12 +572,7 @@ class Flight(Agent):
                     self.heading = np.array(self.heading).astype(np.float64)
                     #self.heading = np.array(self.heading).astype(float)
                     self.heading /= np.linalg.norm(self.heading)
-                elif self.model.joining_method == 2: 
-                    self.leaving_point = np.array(self.leaving_point) 
-                    self.heading = [self.leaving_point[0] - self.pos[0], self.leaving_point[1] - self.pos[1]]  
-                    self.heading = np.array(self.heading).astype(np.float64)
-                    #self.heading = np.array(self.heading).astype(float)
-                    self.heading /= np.linalg.norm(self.heading)               
+               
                 
                 new_pos = self.pos + self.heading * self.speed
 
@@ -694,9 +591,6 @@ class Flight(Agent):
                 elif self.model.joining_method == 1: 
                     self.joining_point = np.array(self.joining_point)
                     self.heading = [self.joining_point[0] - self.pos[0], self.joining_point[1] - self.pos[1]]
-                elif self.model.joining_method == 2: 
-                    self.joining_point = np.array(self.joining_point)
-                    self.heading = [self.joining_point[0] - self.pos[0], self.joining_point[1] - self.pos[1]]
                     #print(self.heading)
                     self.heading = np.array(self.heading).astype(np.float64)
                     #self.heading = np.array(self.heading).astype(float)                
@@ -713,19 +607,12 @@ class Flight(Agent):
                 elif self.model.joining_method == 1: 
                     self.destination = np.array(self.destination)                
                     self.heading = [self.destination[0] - self.pos[0], self.destination[1] - self.pos[1]]
-                    f_c = self.speed 
-                elif self.model.joining_method == 2: 
-                    self.destination = np.array(self.destination)                
-                    self.heading = [self.destination[0] - self.pos[0], self.destination[1] - self.pos[1]]
-                    f_c = self.speed                      
+                    f_c = self.speed  
                     self.heading = np.array(self.heading).astype(np.float64)
                     #self.heading = np.array(self.heading).astype(float) 
                     self.heading /= np.linalg.norm(self.heading)
+                  
                 
-                self.heading = np.asarray(self.heading).astype(float)
-
-                
-                print(self.heading, self.speed)
                 new_pos = self.pos + self.heading * self.speed
 
             if f_c < 0:
@@ -739,12 +626,7 @@ class Flight(Agent):
                 self.model.total_fuel_consumption = np.round(np.double(self.model.total_fuel_consumption), 2)
                 self.fuel_consumption += f_c
                 new_pos = np.round(new_pos.astype(np.double), 2)
-            elif self.model.joining_method == 2: 
-                self.model.total_fuel_consumption += f_c
-                self.model.total_fuel_consumption = np.round(np.double(self.model.total_fuel_consumption), 2)
-                self.fuel_consumption += f_c
-                new_pos = np.round(new_pos.astype(np.double), 2)
-                        
+            
             self.model.space.move_agent(self, new_pos)
 
     def find_neighbors(self, role, search_range): 
@@ -782,9 +664,6 @@ class Flight(Agent):
             joining_point = self.calc_middle_point(self.pos, neighbor.pos)
         elif self.model.joining_method == 1: 
             joining_point = self.joining_point
-        elif self.model.joining_method == 2: 
-            joining_point = self.joining_point     
-            
         dist_flight = ((joining_point[0] - self.pos[0]) ** 2 + (joining_point[1] - self.pos[1]) ** 2) ** 0.5
         dist_neighbor = ((joining_point[0] - self.pos[0]) ** 2 + (joining_point[1] - self.pos[1]) ** 2) ** 0.5
 
