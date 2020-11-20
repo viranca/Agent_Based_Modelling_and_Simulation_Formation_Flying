@@ -1,0 +1,41 @@
+no manager allocation
+    Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000            0.000000        0.000000
+1       Total Fuel Used  41556.223393         7125.065738       17.145605
+2                 steps  13307.960000         8070.620987       60.645065
+3    negotiation_method      1.000000            0.000000        0.000000
+4        joining_method      0.000000            0.000000             NaN
+5             n_manager     40.000000            0.000000        0.000000
+6    max_bid_contractor      0.500000            0.000000        0.000000
+7    min_bid_auctioneer      0.500000            0.000000        0.000000
+8          n_iterations    100.000000            0.000000        0.000000
+9     mean_arrival_time   2639.867879           93.551308        3.543788
+10     std_arrival_time    204.530305           39.160163       19.146387
+
+manager allocation
+    Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000            0.000000        0.000000
+1       Total Fuel Used  41922.966027         7926.789697       18.907989
+2                 steps  12421.130000         8095.778876       65.177475
+3    negotiation_method      1.000000            0.000000        0.000000
+4        joining_method      0.000000            0.000000             NaN
+5             n_manager     40.000000            0.000000        0.000000
+6    max_bid_contractor      0.500000            0.000000        0.000000
+7    min_bid_auctioneer      0.500000            0.000000        0.000000
+8          n_iterations    100.000000            0.000000        0.000000
+9     mean_arrival_time   2657.031361          103.358136        3.889986
+10     std_arrival_time    206.667997           46.296317       22.401299
+
+
+Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000            0.000000        0.000000
+1       Total Fuel Used  35801.697810         1097.715445        3.066099
+2                 steps   3161.090000          128.464050        4.063916
+3    negotiation_method      2.000000            0.000000        0.000000
+4        joining_method      0.000000            0.000000             NaN
+5             n_manager     40.000000            0.000000        0.000000
+6    max_bid_contractor      0.500000            0.000000        0.000000
+7    min_bid_auctioneer      0.500000            0.000000        0.000000
+8          n_iterations    100.000000            0.000000        0.000000
+9     mean_arrival_time   2353.030324           90.755291        3.856954
+10     std_arrival_time    179.750806           27.059490       15.053891

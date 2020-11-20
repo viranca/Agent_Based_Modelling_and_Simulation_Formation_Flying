@@ -1,0 +1,86 @@
+60%___________________________________________________________________
+                 Parameter/indicator    Mean Value  Standard Deviation
+0                     joining_method  0.000000e+00        0.000000e+00
+3                    Real saved fuel  2.591753e+03        6.639773e+02
+
+4                 Total Arrival Time  1.553234e+05        5.317981e+03 --> 3.42%
+5                    Total Fuel Used  3.441348e+04        1.031173e+03 --> 3.00%
+
+6                 Total planned Fuel  3.700523e+04        1.188185e+03
+7   Total saved potential saved fuel  2.440335e+03        7.320128e+02
+8                added to formations  2.906667e+00        1.802201e+00
+9                     new formations  2.013333e+01        3.673622e+00
+10                             steps  4.228667e+03        3.532462e+02
+19                negotiation_method  3.000000e+00        0.000000e+00
+25                         n_manager  6.000000e+01        0.000000e+00
+26                max_bid_contractor  4.000000e-01        6.147346e-16
+29                      n_iterations  7.500000e+01        0.000000e+00
+
+60% more precise______________________________________________________
+                 Parameter/indicator    Mean Value  Standard Deviation
+0                     joining_method  0.000000e+00        0.000000e+00
+3                    Real saved fuel  2.585511e+03        6.543266e+02
+
+4                 Total Arrival Time  1.548952e+05        5.533191e+03
+5                    Total Fuel Used  3.426399e+04        1.074110e+03
+
+6                 Total planned Fuel  3.684951e+04        1.263373e+03
+7   Total saved potential saved fuel  2.450744e+03        7.185426e+02
+8                added to formations  3.072000e+00        1.893009e+00
+9                     new formations  2.024800e+01        3.488821e+00
+10                             steps  4.178056e+03        3.132045e+02
+19                negotiation_method  3.000000e+00        0.000000e+00
+25                         n_manager  6.000000e+01        0.000000e+00
+29                      n_iterations  1.250000e+02        0.000000e+00
+
+40%___________________________________________________________________
+                 Parameter/indicator    Mean Value  Standard Deviation
+0                     joining_method  0.000000e+00        0.000000e+00
+3                    Real saved fuel  2.889681e+03        6.816537e+02
+
+4                 Total Arrival Time  1.598214e+05        6.091461e+03 --> 3.81%
+5                    Total Fuel Used  3.376737e+04        1.152857e+03 --> 3.41%
+
+6                 Total planned Fuel  3.665705e+04        1.297608e+03
+7   Total saved potential saved fuel  2.823895e+03        7.022961e+02
+8                added to formations  9.733333e+00        3.218751e+00
+9                     new formations  2.117333e+01        3.354599e+00
+10                             steps  4.247547e+03        3.141561e+02
+19                negotiation_method  3.000000e+00        0.000000e+00
+25                         n_manager  4.000000e+01        0.000000e+00
+29                      n_iterations  7.500000e+01        0.000000e+00
+
+40% other negotiation___________________________________________________
+                 Parameter/indicator    Mean Value  Standard Deviation
+0                     joining_method  0.000000e+00        0.000000e+00
+3                    Real saved fuel  1.238638e+03        6.129031e+02
+
+4                 Total Arrival Time  1.416656e+05        5.430125e+03
+5                    Total Fuel Used  3.567489e+04        1.109810e+03
+
+6                 Total planned Fuel  3.691352e+04        1.134135e+03
+7   Total saved potential saved fuel  1.237958e+03        6.115535e+02
+8                added to formations  0.000000e+00        0.000000e+00
+9                     new formations  6.733333e+00        2.937793e+00
+19                negotiation_method  2.000000e+00        0.000000e+00
+25                         n_manager  4.000000e+01        0.000000e+00
+29                      n_iterations  7.500000e+01        0.000000e+00
+
+20%_____________________________________________________________________
+                 Parameter/indicator    Mean Value  Standard Deviation
+0                     joining_method  0.000000e+00        0.000000e+00
+3                    Real saved fuel  2.312804e+03        6.964226e+02
+
+4                 Total Arrival Time  1.550672e+05        6.276658e+03 --> 4.05%
+5                    Total Fuel Used  3.451666e+04        1.180444e+03 --> 3.42%
+
+6                 Total planned Fuel  3.682946e+04        1.105881e+03
+7   Total saved potential saved fuel  2.268562e+03        7.416683e+02
+8                added to formations  2.326667e+01        4.284899e+00
+9                     new formations  1.094667e+01        2.609201e+00
+10                             steps  4.338987e+03        3.229316e+02
+19                negotiation_method  3.000000e+00        0.000000e+00
+25                         n_manager  2.000000e+01        0.000000e+00
+29                      n_iterations  7.500000e+01        0.000000e+00
+
+

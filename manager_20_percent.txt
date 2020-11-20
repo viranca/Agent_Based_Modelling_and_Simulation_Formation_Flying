@@ -1,0 +1,31 @@
+Parameter/indicator,Mean Value,Standard Deviation
+joining_method,0.0,0.0
+Run,37.0,21.79449471770337
+Deal values,-1.1171804222461408e-14,1.2014764628488522e-13
+Real saved fuel,1238.638449968102,612.9031455865319
+Total Arrival Time,141665.6496000001,5430.124668066017
+Total Fuel Used,35674.88607673313,1109.8102517497264
+Total planned Fuel,36913.52452670123,1134.134504945874
+Total saved potential saved fuel,1237.9580644511357,611.5534938809476
+added to formations,0.0,0.0
+new formations,6.733333333333333,2.937793496934499
+steps,3811.6133333333332,142.3272678413071
+n_flights,50.0,0.0
+n_origin_airports,20.0,0.0
+n_destination_airports,20.0,0.0
+communication_range,200.0,0.0
+width,750.0,0.0
+height,750.0,0.0
+speed,0.25,0.0
+fuel_reduction,0.75,0.0
+negotiation_method,2.0,0.0
+auction_step,5.0,0.0
+auction_start,0.5,0.0
+bidding_threshold,0.8999999999999992,7.823895508959627e-16
+departure_window,3.0,0.0
+area_range,25.0,0.0
+n_manager,40.0,0.0
+max_bid_contractor,0.3999999999999994,6.147346471325422e-16
+min_bid_auctioneer,0.30000000000000043,4.470797433691216e-16
+true_value_av_amount_per,4.0,0.0
+n_iterations,75.0,0.0

@@ -1,0 +1,153 @@
+4 auction a step_________________________________________________________
+Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000            0.000000        0.000000
+1       Total Fuel Used  35375.035333         1002.488975        2.833888
+2                 steps   3137.146667          111.570084        3.556419
+3    negotiation_method      2.000000            0.000000        0.000000
+4        joining_method      0.000000            0.000000             NaN
+5             n_manager     40.000000            0.000000        0.000000
+6    max_bid_contractor      0.500000            0.000000        0.000000
+7    min_bid_auctioneer      0.500000            0.000000        0.000000
+8          n_iterations     75.000000            0.000000        0.000000
+9     mean_arrival_time   2346.046080           99.649351        4.247545
+10     std_arrival_time    179.802560           24.523714       13.639246
+
+1 auction per step_______________________________________________________
+Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000            0.000000        0.000000
+1       Total Fuel Used  36345.430394         1156.562143        3.182139
+2                 steps   3129.906667          126.853307        4.052942
+3    negotiation_method      2.000000            0.000000        0.000000
+4        joining_method      0.000000            0.000000             NaN
+5             n_manager     40.000000            0.000000        0.000000
+6    max_bid_contractor      0.500000            0.000000        0.000000
+7    min_bid_auctioneer      0.500000            0.000000        0.000000
+8          n_iterations     75.000000            0.000000        0.000000
+9     mean_arrival_time   2330.572267           92.537678        3.970599
+10     std_arrival_time    162.916594           23.745558       14.575285
+
+
+
+
+
+
+
+
+
+0.5 - 0.5 ________________________________________________________________
+Parameter/indicator,	Mean Value,	Standard Deviation,	StD Percentage
+communication_range,	200
+Total Fuel Used,	35582.4255975	1175.1566768924		3.302632288
+steps,			3141.90666666	124.819997242		3.972746821
+negotiation_method,	2
+joining_method,		0
+n_manager,		40
+max_bid_contractor,	0.5
+min_bid_auctioneer,	0.5
+n_iterations,		75.
+mean_arrival_time,	2332.60528533	82.763925813		3.548132482339439
+std_arrival_time,	171.730330888	23.384072535		13.61673992865541
+
+0.4 - 0.4_______________________________________________________________
+Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000       
+1       Total Fuel Used  35435.587640        1.091342e+03    3.079790e+00
+2                 steps   3123.760000        1.192918e+02    3.818853e+00
+3    negotiation_method      2.000000        
+4        joining_method      0.000000        
+5             n_manager     40.000000        
+6    max_bid_contractor      0.400000        
+7    min_bid_auctioneer      0.400000        
+8          n_iterations     75.000000        
+9     mean_arrival_time   2346.894400        1.034178e+02    4.406581e+00
+10     std_arrival_time    176.058442        2.719667e+01    1.544753e+01
+
+0.4 - 0.6 _________________________________________________________________
+Parameter/indicator,	Mean Value,	Standard Deviation,	StD Percentage
+communication_range,	200
+Total Fuel Used,	35584.17806274	1070.1280728762		3.0073142
+steps,			3148.89333	130.64471869		4.1489089
+negotiation_method,	2	
+joining_method,		0
+n_manager,		40
+max_bid_contractor,	0.40		
+min_bid_auctioneer,	0.6
+n_iterations,		75.0,
+mean_arrival_time,	2360.722133	104.2713485		4.4169259
+std_arrival_time,	173.438168	27.34320935		15.765393
+
+0.6 - 0.6 ______________________________________________________________
+Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000        0.000000e+00    0.000000e+00
+1       Total Fuel Used  35953.922560        1.097519e+03    3.052571e+00
+2                 steps   3180.653333        1.108479e+02    3.485067e+00
+3    negotiation_method      2.000000        0.000000e+00    0.000000e+00
+4        joining_method      0.000000        0.000000e+00             NaN
+5             n_manager     40.000000        0.000000e+00    0.000000e+00
+6    max_bid_contractor      0.600000        8.941595e-16    1.490266e-13
+7    min_bid_auctioneer      0.600000        8.941595e-16    1.490266e-13
+8          n_iterations     75.000000        0.000000e+00    0.000000e+00
+9     mean_arrival_time   2367.285765        8.941417e+01    3.777075e+00
+10     std_arrival_time    178.554207        2.489783e+01    1.394413e+01
+
+0.6 - 0.4 _______________________________________________________________
+Parameter/indicator	Mean Value 	Standard Deviation	StD Percentage
+communication_range,	200
+Total Fuel Used,	35857.8224	1255.19195867		3.50046899
+steps,			3159.29333	131.842019850		4.17314905
+negotiation_method,	2
+joining_method,		0
+n_manager,		40
+max_bid_contractor,	0.6
+min_bid_auctioneer,	0.4		
+n_iterations,		75
+mean_arrival_time,	2363.213386	103.02474058		4.3595191
+std_arrival_time,	172.5498149	24.061691355		13.944779
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BAD EXAMPLE!! ___________________________________________________________
+
+negotiation 3 + 0.5 _ 0.3 _______________________________________________
+
+Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000        
+1       Total Fuel Used  33994.330393        1.189032e+03    3.497737e+00
+2                 steps   3622.013333        2.618999e+02    7.230784e+00
+3    negotiation_method      3.000000        
+4        joining_method      0.000000        
+5             n_manager     40.000000        
+6    max_bid_contractor      0.500000        
+7    min_bid_auctioneer      0.300000        
+8          n_iterations     75.000000        
+9     mean_arrival_time   2682.155109        9.606768e+01    3.581735e+00
+10     std_arrival_time    195.367457        4.101870e+01    2.099567e+01
+
+negotiation 3 + 0.5 _ 0.5 _______________________________________________
+
+Parameter/indicator    Mean Value  Standard Deviation  StD Percentage
+0   communication_range    200.000000            
+1       Total Fuel Used  33979.566269         1022.352767        3.008728
+2                 steps   3648.640000          279.668222        7.664999
+3    negotiation_method      3.000000            
+4        joining_method      0.000000            
+5             n_manager     40.000000            
+6    max_bid_contractor      0.500000           
+7    min_bid_auctioneer      0.500000            
+8          n_iterations     75.000000            
+9     mean_arrival_time   2686.290069           91.999552        3.424781
+10     std_arrival_time    190.519641           39.111901       20.529065
