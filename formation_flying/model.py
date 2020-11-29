@@ -6,6 +6,7 @@
 """
 
 import numpy as np
+import pandas as pd
 np.seterr(all='raise')
 
 from mesa import Model
@@ -19,7 +20,7 @@ from .parameters import model_params, max_steps, n_iterations, model_reporter_pa
 from .agents.flight import Flight
 from .agents.airports import Airport
 
-
+from .airport_locations.airport_selector import airport_selector
 
 
 class FormationFlying(Model):
@@ -170,9 +171,46 @@ class FormationFlying(Model):
     def make_airports(self):
 
         inactive_airports = 0
+        '''
+        # =============================================================================
+        # Here, the airport selector is called.
+        # =============================================================================
+        '''
+       
+        airport_selection = airport_selector(self.n_origin_airports + self.n_destination_airports)
+        for i in range(self.n_origin_airports):
+            x = float(airport_selection.iloc[0:1, 1:2].values  * self.space.x_max)
+            y = float(airport_selection.iloc[0:1, 0:1].values  * self.space.y_max)
+            airport_selection = airport_selection.drop(airport_selection.index[0])     
+            
+            closure_time = 0
+            pos = np.array((x, y))
+            airport = Airport(i + self.n_flights, self, pos, "Origin", closure_time)
+            self.space.place_agent(airport, pos)
+            self.schedule.add(airport) # they are only plotted if they are part of the schedule  
+        
+        for i in range(self.n_destination_airports):
+            x = float(airport_selection.iloc[0:1, 1:2].values  * self.space.x_max)
+            y = float(airport_selection.iloc[0:1, 0:1].values  * self.space.y_max)
+            airport_selection = airport_selection.drop(airport_selection.index[0]) 
+            if inactive_airports:
+                closure_time = 50
+                inactive_airports = 0
+            else:
+                closure_time = 0
+            pos = np.array((x, y))
+            airport = Airport(i + self.n_flights + self.n_origin_airports, self, pos, "Destination", closure_time)
+            self.space.place_agent(airport, pos)
+            self.destination_agent_list.append(airport)
+            self.schedule.add(airport) # agents are only plotted if they are part of the schedule            
+            
+            
+        '''
+        #this is the original code:
         for i in range(self.n_origin_airports):
             x = self.random.uniform(self.origin_airport_x[0], self.origin_airport_x[1]) * self.space.x_max
             y = self.random.uniform(self.origin_airport_y[0], self.origin_airport_y[1]) * self.space.y_max
+            
             closure_time = 0
             pos = np.array((x, y))
             airport = Airport(i + self.n_flights, self, pos, "Origin", closure_time)
@@ -193,7 +231,8 @@ class FormationFlying(Model):
             self.destination_agent_list.append(airport)
             self.schedule.add(airport) # agents are only plotted if they are part of the schedule
 
-
+        '''
+        
     # =========================================================================
     # Define what happens in the model in each step.
     # =========================================================================

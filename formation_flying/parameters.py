@@ -37,6 +37,14 @@ max_steps = 4000
 # Multiple iterations are used when running the batchrunner.py:
 n_iterations = 100
 
+
+'''
+# =============================================================================
+# negotiation_method 0:greedy, 1:cnp, 2:English, 3:Vickrey, 4:Japanese
+# joining_method 0:middle_point, 2:numerically optimised angle
+# =============================================================================
+'''
+
 model_params = {
     "n_flights": 50,
     "n_origin_airports": 20,
@@ -46,10 +54,10 @@ model_params = {
     "height": 750, # [km]
     "speed": 0.3, #[km / second]
     "fuel_reduction": 0.75, 
-    "negotiation_method": 4,
+    "negotiation_method": 1,
     "auction_step": 5, #The stepsize that is added to a bid inside the auctions
     "auction_start": 0.5,
-    "joining_method": 2,
+    "joining_method": 0,
     "bidding_threshold": 0.9, #the percentage of the max value, that a manager wants at least (used in CNP)
     "departure_window": 3, 
     "area_range": 25, #[km]

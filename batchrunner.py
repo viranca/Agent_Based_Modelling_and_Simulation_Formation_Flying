@@ -114,9 +114,9 @@ indicators_df["StD Percentage"] = (indicators_df['Standard Deviation'] / indicat
 # =============================================================================
 '''
 
-#complete results show each individual iteration, save both for analysis.
-results_df.to_csv('complete_results_japan_200km_join0_airport3_maxsteps4000.txt', index = False)
-indicators_df.to_csv('results_japan_200km_join0_airport3_maxsteps4000.txt', index = False)
+##complete results show each individual iteration, save both for analysis.
+#results_df.to_csv('complete_results_japan_200km_join0_airport3_maxsteps4000.txt', index = False)
+#indicators_df.to_csv('results_japan_200km_join0_airport3_maxsteps4000.txt', index = False)
 
 
 print(indicators_df)
